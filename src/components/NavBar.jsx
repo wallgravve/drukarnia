@@ -1,188 +1,175 @@
-import React, {useState} from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
-import { fade, withStyles } from '@material-ui/core/styles';
-// import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
-import useForm from 'react-hook-form';
+import React, { useState } from "react";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import InputBase from "@material-ui/core/InputBase";
+import { fade, withStyles } from "@material-ui/core/styles";
+import SearchIcon from "@material-ui/icons/Search";
 
+import grey from '@material-ui/core/colors/grey';
 
-const styles  = theme => ({
+import Button from '@material-ui/core/Button';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+
+const styles = theme => ({
   root: {
-    flexGrow: 1,
-    position: '-webkit-sticky',
-    position: 'sticky',
-    marginTop: "-40px",
-    zIndex: "100"
-  },
+ 
 
+  },
   appBar: {
-    backgroundColor: "#fff",
-    boxShadow: "0px 1px 1px -1px rgba(0,0,0,0.1),0px 1px 2px 0px rgba(0,0,0,0.04),0px 1px 3px 0px rgba(0,0,0,0.12)",
-   
-    width: "100vw",
+    backgroundColor: "white", 
+    color: "black",
 
-
-   
-  
-},
-
-  menuButton: {
-    marginRight: theme.spacing(2),
   },
-  title: {
-    flexGrow: 1,
-    display: 'none',
-    [theme.breakpoints.up('sm')]: {
-      display: 'block',
-    },
-  },
+  menuButton: {},
+  title: {},
   search: {
-    
-    height: '63px',
-    color: "#393536",
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.05),
-    '&:hover': {
-      backgroundColor: fade(theme.palette.common.black, 0.12),
-    },
-
-    marginRight: 0,
-    width: '100%',
+    border: "solid 1.5px black",
+    width: "80vw",
+    display: "grid",
+    gridTemplateColumns: "1fr 64px",
+    gridTemplateArea: "search icon",
+    height: "64px",
     [theme.breakpoints.up('sm')]: {
-      marginRight: theme.spacing(1),
-      width: 'auto',
+      width: "calc(60vw + 120px)"
     },
   },
   searchIcon: {
-    width: theme.spacing(7),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    color: "#393536",
+ gridArea: "icon",
   },
   inputRoot: {
-    color: 'inherit',
-    fontSize: "22px",
- 
+  
   },
-  title: {
-    color: "#393536",
-    padding: theme.spacing(1, 1, 1, 7),
-  },
+  title: {},
   inputInput: {
-    padding: theme.spacing(1, 1, 1, 7),
-    transition: theme.transitions.create('width'),
-    height: "2.2234em",
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: 160,
-      '&:focus': {
-        width: 240,
-      },
-    },
+    gridArea: "search",
+    width: "100%",
+    height: "100%",
   },
+  orientation: { display: "none" },
+  span: { padding: "20px", fontFamily: "sans-serif" },
+  "input:checked + span": { backgroundColor: "#444", color: "#fff" }
+
+
 });
-
-
 
 class NavBar extends React.Component {
   constructor(props) {
-  super(props);
-  this.listenScrollEvent = this.listenScrollEvent.bind(this);    
+    super(props);
+    this.listenScrollEvent = this.listenScrollEvent.bind(this);
 
-  this.state = {
-    inputValue: "",
-    inputCategory: {},
-    inputOrientation: "horizontal",
-    marginTop: "-40px",
-  };
+    this.state = {
+      inputValue: "",
+      inputCategory: {},
+      inputOrientation: "horizontal",
+      marginTop: "-40px"
+    };
   }
   listenScrollEvent = e => {
     const { pageYOffset } = window;
     if (pageYOffset > 20) {
-        this.setState({ marginTop: "-120px",
-           });
+      this.setState({ marginTop: "-95px" });
     } else if (pageYOffset < 20) {
-        this.setState({marginTop: "-80px", 
-            });
+      this.setState({ marginTop: "-80px" });
     }
-};
+  };
 
-componentDidMount() {
-  window.addEventListener('scroll', this.listenScrollEvent);
-}
+  componentDidMount() {
+    window.addEventListener("scroll", this.listenScrollEvent);
+  }
   handleFormSubmit = e => {
     e.preventDefault();
     this.props.onSubmit(this.state.inputValue);
-    // this.props.onSubmit(this.state.inputCategory); 
+    // this.props.onSubmit(this.state.inputCategory);
 
     console.log(this.state.inputOrientation);
   };
 
-  handleFormOriantation = (value) => {
+  handleFormOriantation = value => {
+    this.setState({ inputOrientation: value });
+  };
+  render(props) {
+    const { classes } = this.props;
+    const primary = grey[900]; 
+    return (
+      <div
+        style={{ position: "sticky" }}
+        className={classes.root}
+        style={{ marginTop: this.state.marginTop }}
+      >
+        <AppBar className={classes.appBar} position="static">
+          <Toolbar style={{
+            display: "flex", 
+            flexDirection: "column",
+            }}> 
+            <form onSubmit={this.handleFormSubmit} className="ui form">
+              <div className={classes.search}>
+                <div className={classes.searchIcon}>
+                  <SearchIcon />
+                </div>
+                <InputBase
+                  component="input"
+                  name="query"
+                  placeholder="Szukaj w naszej kolekcji ponad 100 000 zdjęć lub grafik"
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput
+                  }}
+                  type="text"
+                  inputProps={{ "aria-label": "search" }}
+                  value={this.state.inputValue}
+                  onChange={e => this.setState({ inputValue: e.target.value })}
+                />
+              </div>
+            </form>
+            <ButtonGroup 
+       
+            style={{padding: "20px 10px"}}
+       
+            >
+             <label for="POZIOMA">
+  <input id="POZIOMA" style={{display: "none" }}
+   type="checkbox" />
+  <span style={{padding: "20px", 
+  fontFamily: "sans-serif",
+  border: "solid 1px black",
+  borderRadius: "2px"
+  }}>POZIOMA</span>
+  </label>
+  <label for="PIONOWA">
+  <input id="PIONOWA"  style={{display: "none" }}
+  type="checkbox" />
+   <span style={{padding: "20px", 
+  fontFamily: "sans-serif",
+  border: "solid 1px black",
+  borderRadius: "2px"
+  }}>POZIOMA</span>
+  </label>
+  <label for="KWADRAT">
+  <input id="KWADRAT" style={{display: "none" }}
+   type="checkbox" />
+   <span style={{padding: "20px", 
+  fontFamily: "sans-serif",
+  border: "solid 1px black",
+  borderRadius: "2px"
+  }}>POZIOMA</span>
+  </label>
+  <label for="WSZYSTKIE">
+  <input id="WSZYSTKIE"  style={{display: "none" }}
+  type="checkbox"
+   checked/>
+   <span style={{padding: "20px", 
+  fontFamily: "sans-serif",
+  border: "solid 1px black",
+  borderRadius: "2px"
+  }}>POZIOMA</span>
+  </label>
+            </ButtonGroup>
+          </Toolbar>
 
-    this.setState({inputOrientation: value});
+        </AppBar>
+      </div>
+    );
   }
-render(props) {
-
-
-  const {classes} = this.props;
-  return (
-    <div  style={{position: "sticky"}} className={classes.root}
-    style={{marginTop: this.state.marginTop }}
-    >
-      <AppBar className={classes.appBar} position="static">
-        <Toolbar>
-          {/* <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-          >
-            <MenuIcon />
-          </IconButton>*/}
-          <Typography className={classes.title} variant="h6" noWrap>
-           Tel. +48 733 020 636
-          </Typography> 
-          <Typography className={classes.title} variant="h6" noWrap>
-           E-mail.  info@fotodream.pl
-          </Typography> 
-          <form onSubmit={this.handleFormSubmit} className="ui form">
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-             component="input"
-              name= "query"
-              placeholder="Szukane zdjęcie"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              type="text"
-              inputProps={{ 'aria-label': 'search' }}
-              value={this.state.inputValue}
-              onChange={e => this.setState
-                ({ inputValue: e.target.value })}
-            />
-          </div>
-          </form>
-     
-
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
-}
 }
 
 export default withStyles(styles)(NavBar);

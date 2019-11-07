@@ -128,7 +128,7 @@ background-image: url(http://www.transparenttextures.com/patterns/black-paper.pn
 ============================= */
 
 
-.Btn-crop {
+/* .Btn-crop {
   
   padding-right: 20px;
 font-size: 14px;
@@ -174,8 +174,10 @@ cursor: pointer;
   perspective-origin: calc(100% - 53px);}
 
 .imageCapture-animation {
-  animation: transform-btn 0.4s linear;
+  animation: transform-btn 0.52s linear;
   animation-delay: 100ms;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 
 }
 .imageCapture {
@@ -206,20 +208,56 @@ cursor: pointer;
   letter-spacing: 1.2px;
   margin: 10px 0;
   background: #fbae11;
+} */
+.image-teaser {
+  background-color: rgba(34, 31, 31, 0.432); 
+  transform: translateY(126px);
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  height: 40%;
+  border-left: 10px solid transparent;
 }
 
 
+.image-teaser::after {
+  position: absolute;
+  transform: translate(-10px, -146px);
+top: 0px;
+  content: "";
+	width: 0;
+	height: 0;
+	border-bottom: 121px solid rgba(34, 31, 31, 0.432); 
+	border-left: 360px solid transparent;
+	margin: 25px auto 0;
+}
+.Btn-text {
+  opacity:1 !important;
+  color: white;
+  text-transform: uppercase;
+  font-size: 24px;
+  height: 50px;
+  line-height: 50px;
+  padding: 0 25px;
+  letter-spacing: 2.13px;
+  font-weight: 600;
+  transform: translateY(20px);
+ 
+}
+.icon {
+  transform: translate(60px, -90px);
+}
 @keyframes spinner {
   to {
     transform: rotate(1turn);
   }
 }
 @keyframes transform-btn {
-  from {
+  0%{
     transform: translate(-40px);
     opacity: 0;
   }
-  to {
+ 
+  100% {
     transform: translate(-0px);
     opacity: 1;
   }
@@ -351,8 +389,20 @@ text-align: center;}
 }
 .MuiToolbar-root {
   display: flex;
+  flex-direction: row-reverse;
   justify-content: center;
+ 
+
 }
+.MuiPaper-root {
+  box-shadow: none !important;
+}
+
+.ui .form {
+  background: red;
+}
+
+
 /*SLIDER */
 html, body {
   font-family: "Quicksand", sans-serif;
@@ -407,22 +457,18 @@ a {
   0% {
     opacity: 0;
   }
-  50% {
-    opacity: 1;
-  }
+ 
   100% {
-    opacity: 0;
+    opacity: 1;
   }
 }
 @keyframes sdb07 {
   0% {
     opacity: 0;
   }
-  50% {
-    opacity: 1;
-  }
+
   100% {
-    opacity: 0;
+    opacity: 1;
   }
 }
 
@@ -431,7 +477,7 @@ a {
   cursor: pointer;
 }
 .more-up  {
-  padding-top: 0px;
+  padding-top: 80px;
 }
 .more-up  span {
   position: absolute;

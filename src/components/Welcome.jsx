@@ -8,17 +8,17 @@ constructor(props) {
     super(props);
     this.listenScrollEvent = this.listenScrollEvent.bind(this);    
     this.state = {
-        transform: "scale(0.5)",
+        transform: "scale(0.65)",
        
     }
 }
     listenScrollEvent = e => {
         const { pageYOffset } = window;
         if (pageYOffset > 20) {
-            this.setState({ transform: "scale(0.32)",
+            this.setState({ transform: "scale(0.44)",
                });
         } else if (pageYOffset < 20) {
-            this.setState({transform: "scale(0.48)", 
+            this.setState({transform: "scale(0.65)", 
                 });
         }
     };

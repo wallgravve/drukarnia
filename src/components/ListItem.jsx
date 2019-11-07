@@ -2,24 +2,52 @@ import React from "react";
 import ImageCard from "./ImageCard";
 import StackGrid from "react-stack-grid";
 import ResizeDetector from "react-resize-detector";
+import styled from "styled-components";
+// import Loader from "./server/loader/Loader";
+// import ImageLoader from "./ImageLoader";
+
+
+// class OldListItem extends React.Component {
+//   state = { images };
+
+//   render_images() {
+//     return this.props.images.map((image) => (
+//     <ImageCard
+//     key={image.id}
+//     image={image}
+//   />
+//     ));
+// }
+// render () {
+//   return (
+//     <StackGrid className="list" 
+//   columnWidth={420}
+//   monitorImagesLoaded={true}
+//   // gutterHeight={200} 
+//   >
+//   {this.render_images()}
+//  {/* {this.props.loading && <Loader />} */}
+//  </StackGrid>  
+//   );
+// }
+// }
 
 const ListItem = props => {
+
+  
   const images = props.images.map((image) => {
     return <ImageCard
             key={image.id}
             image={image}
-           
-        
           />
   });
-  return    <StackGrid className="list" 
-  columnWidth={420}
-  appearDelay={400}
-  monitorImagesLoaded={true}
+  return    <StackGrid 
+  className="list" 
+  columnWidth={400}
+  gutterHeight={40}
+
   >
-  
-       {images}
-  
+ {images} 
  </StackGrid>;
 };
 // const ListItem = ({ photo }) => {

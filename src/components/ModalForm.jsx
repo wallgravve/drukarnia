@@ -1,159 +1,293 @@
 import React from "react";
-// import './Modal.css';
+
 import PropTypes from "prop-types";
 import Crop from "./Crop";
-import ImageForm from "./ImageForm";
 
-class ModalForm extends React.Component {
+import useForm from "react-hook-form";
+import axios from 'axios';
+
+
+// Messages
+const required = "This field is required";
+const maxLength = "Your input exceed maximum length";
+
+// Error Component
+const errorMessage = error => {
+  return <div className="invalid-feedback">{error}</div>;
+};
+
+
+
+const encode = (data) => {
+  return Object.keys(data)
+      .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+      .join("&");
+}
+
+
+
+function ModalForm () {
+  const { register, handleSubmit, errors } = useForm();
+  const onSubmit = async data => 
+ { 
+   console.log(data);
+    const form = await axios.post('/api/form',{
+      data
+    })
+  }
+
+  return (
+    
+    <div className="container">
+
+      <div className="col-sm-12">
+        <form onSubmit={handleSubmit(onSubmit)}>
+
+          <div className="form-group">
+            <label htmlFor="Name">Nazwa użytkownika</label>
+            <input
+              className="form-control"
+              type="text"
+        
+              name="Name"
+              ref={register({ required: true, maxLength: 50 })}
+              
+              
+            />
+            {errors.Name &&
+              errors.Name.type === "required" &&
+              errorMessage(required)}
+            {errors.Name &&
+              errors.Name.type === "maxLength" &&
+              errorMessage(maxLength)}
+          </div>
+          <div className="form-group">
+          <label htmlFor="MobileNumber">Telefon</label>
+
+            <input
+              className="form-control"
+              type="tel"
+            
+              name="MobileNumber"
+              ref={register({ required: false, maxLength: 12 })}
+            />
+            {errors.MobileNumber &&
+              errors.MobileNumber.type === "maxLength" &&
+              errorMessage(maxLength)}
+          </div>
+          <div className="form-group">
+          <label htmlFor="Email">Email</label>
+
+            <input
+              className="form-control"
+              type="email"
+           
+              name="Email"
+              ref={register({ required: true, pattern: /^\S+@\S+$/i })}
+            />
+            {errors.Email &&
+              errors.Email.type === "required" &&
+              errorMessage(required)}
+          </div>
+         
+        
+          <div className="form-group">
+          <label htmlFor="City">Miasto</label>
+
+            <input
+              className="form-control"
+              type="text"
+      
+              name="City"
+              ref={register({ required: false, maxLength: 50 })}  
+            />
+          </div>
+         
+         
+        
+          <div className="form-group">
+          <label htmlFor="Message">Wiadomość</label>
+            <textarea className="form-control" 
+            name="Message"  
+             ref={register({ required: false, maxLength: 1600 })} />
+          </div>
+          <div className="form-group">
+            <input
+              type="checkbox"
+              placeholder="Subscribe to Newsletter"
+              name="Subscribe to Newsletter"
+              id="customCheck1"
+              ref={register}
+            />
+            <label htmlFor="customCheck1"> Proszę o kontakt</label>
+          </div>
+          <div className="form-group">
+            <input className="btn btn-primary" type="submit" />
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+
+}
+
+class oldModalForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "",
-      phone: "",
-      email: "",
-      height: "",
-      width: "",
-      image: "",
-      price: "",
-   
-      
-  };
-  this.changeWidth = this.changeWidth.bind(this);
-  this.changeHeight = this.changeHeight.bind(this);
- // this.imageRef = React.createRef();
-  console.log("props:" +this.props);
-  }
 
-  changeWidth = (e) => {
-    // e.preventDefault();
-    this.setState({ width: parseInt(e.target.value) || 0},
-     () => {
-      console.log("New state in ASYNC callback:", this.state.width);
-    });
-
-   
-   
+      widthOrigin: "",
+      heightOrigin: "",
   
-    console.log(this.state.width);
- 
+   
+      ContactForm: {
+        name: "sasa",
+        phone: "sasa",
+        email: "",
+        message: "",
+        city: "",
+      },
+
+      errors: {
+        name: null,
+        phone: null,
+        email: null,
+        message: null,
+        city: null,
+      }
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
-
-  changeHeight(e) {
-    let height = parseInt(e.target.value) || 0;
-    this.setState({ height });
-    console.log(this.state.name);
-  }
-
-
-  onChange = crop => {
-    this.setState({ crop });
-    console.log(crop);
+   handleChange = (event) => {
+    event.preventDefault()
+    this.setState({
+      ContactForm: {
+        [event.target.id]: event.target.value
+      }
+  
+    })
   };
-  handleChange = (e) => {
-        this.setState({
-            [e.target.id]: e.target.value
-        })
-        console.log(this.state.name);
-    };
-    handleSubmit = (e) => {
-        e.preventDefault();
-
-    };
-  render() {
-    const { width } = this.props;
-    return (
-      <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
-  <div className="Crop__container" 
-     
-    >
-      {/* <ImageForm/> */}
-
-
-        <Crop src={this.props.src} style={{width: "60%"}}
-            widthOrigin={width}
-        />
-        {this.props.children}
-        <div>{width}</div>
+  async handleSubmit(e){
+    console.log("działam");
     
+ 
+}
+
+  render() {
+    const { widthOrigin, heightOrigin, src } = this.props;
+    const {ContactForm} = this.state;
+
+    return (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center"
+        }}
+      >
+        <div className="Crop__container">
+          {/* <ImageForm/> */}
+
+          <Crop
+            src={src}
+            style={{ width: "60%" }}
+            widthOrigin={widthOrigin}
+            heightOrigin={heightOrigin}
+          />
+          {this.props.children}
         </div>
 
-        <form action="" 
-        style={{width: "40%", 
-        display: "flex", 
-        flexDirection: "column",
-        paddingLeft: "40px"}}>
-<div className="form_content">
+        <form
+          id="contact-form"
+          action="/form"
+          style={{
+            width: "40%",
+            display: "flex",
+            flexDirection: "column",
+            paddingLeft: "40px"
+          }}
+          onSubmit={this.handleSubmit.bind(this)}
+          method="POST"
+        >
+          {/* <div className="form_content">
   <p>Po wypełnieniu i wysłaniu do nas formularza, następi przekierowanie do strony aukcji allegro, zamówienie zostanie 
     przekazane do realizacji niezwłocznie po dokonaniu zakupu na aukcji. Poniższy formularz jest nam niezbędny
      do pozyskania tylko tych informacji, które pozwalają nam świadczyć usługi najwyższych standardów.
   </p>
-</div>
+</div> */}
           {/* <h3>{this.props.width / 11.8}cm</h3> */}
-                    <div className="form_group">   <label htmlFor="name" className="form_label">Imię</label>
-                    <input id="name" type="text" 
-                    onChange={this.handleChange}
-                    value={this.state.name}
-                    className="form_input"
-                    />  </div>
-                    <div className="form_group">    <label htmlFor="phone" className="form_label">Numer telefonu</label>
-                    <input id="phone"  type="text" 
-                    onChange={this.handleChange}
-                    value={this.state.phone}
-                    className="form_input"
-                    /></div>
-                    <div className="form_group">      <label htmlFor="email" className="form_label">Adres email</label>
-                    <input id="email"  type="email" 
-                    onChange={this.handleChange}
-                    value={this.state.email}
-                    className="form_input"
-                    /> </div>
-                        <div className="form_calc">
-                          <div className="form_group"
-                          style={{width:"40%"}}>
-                            <label htmlFor="width" className="form_label">Szerokość</label>
-                            <input id=""  type="number" 
-                            onChange={this.changeWidth}
-                            value={this.state.width}
-                            className="form_input"
-                            /></div>
-                            <div className="form_group"
-                            style={{width:"40%"}}>
-                            <label htmlFor="height" className="form_label">Wysokość</label>
-                            <input id="height"  type="number" 
-                            onChange={this.changeHeight}
-                            value={this.state.height}
-                            className="form_input"
-                            /></div>
-                        </div>
-                    {/* <div className="form_group"> 
-                    <label htmlFor="image" className="form_label">Numer zdjęcia</label>
-                    <input id="image"  type="text" 
-                    onChange={this.handleChange}
-                    value={this.state.image}
-                    className="form_input"
-                    /></div> */}
-                    <div className="form_group">
-                    <label htmlFor="price" className="form_label">Liczba sztuk do zakupu</label>
-                    <input id="price"  type="text" 
-                    onChange={this.handleChange}
-                    value={this.state.price}
-                    className="form_input"
-                    />
-</div>
-                 
-                
-              
-               <div className="form_group"
-              >   
-                    <button className="button_submit"  >Wyślij</button>  
-                   </div>
-            </form>
+          <div className="form_group">
+            {" "}
+            <label htmlFor="name" className="form_label">
+              Imię
+            </label>
+            <input
+              id="name"
+              type="text"
+              onChange={this.handleChange}
+              value={ContactForm.name}
+              className="form_input"
+            />{" "}
+          </div>
+          <div className="form_group">
+            {" "}
+            <label htmlFor="city" className="form_label">
+              Miasto
+            </label>
+            <input
+              id="city"
+              type="text"
+              onChange={this.handleChange}
+              value={ContactForm.city}
+              className="form_input"
+            />
+          </div>
+          <div className="form_group">
+            {" "}
+            <label htmlFor="email" className="form_label">
+              Adres email
+            </label>
+            <input
+              id="email"
+              type="email"
+              onChange={this.handleChange}
+              value={ContactForm.email}
+              className="form_input"
+            />{" "}
+          </div>
+          <div className="form_group">
+            {" "}
+            <label htmlFor="phone" className="form_label">
+              Numer telefonu
+            </label>
+            <input
+              id="phone"
+              type="text"
+              onChange={this.handleChange}
+              value={ContactForm.phone}
+              className="form_input"
+            />
+          </div>
+          <div className="form_group">
+            {" "}
+            <label htmlFor="message" className="form_label">
+          Uwagi
+            </label>
+            <input
+              id="message"
+              type="text"
+              onChange={this.handleChange}
+              value={ContactForm.message}
+              className="form_input"
+            />
+          </div>
 
-
-
-
+          <div className="form_group">
+            <button className="button_submit">Wyślij</button>
+          </div>
+        </form>
       </div>
-    
     );
   }
 }

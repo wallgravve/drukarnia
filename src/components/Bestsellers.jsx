@@ -21,6 +21,7 @@ const sliderSettings = {
   touchMove: false,
   slidesToShow: 1,
   variableWidth: true,
+  height: 900,
   responsive: [
     {
       breakpoint: 767,
@@ -111,7 +112,7 @@ class Basic extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="container" >
         <DesktopTablet>
           <div className="section__box">
             <div className="section__content">

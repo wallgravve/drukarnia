@@ -24,7 +24,8 @@ class App extends Component {
     offset: 0,
     inputOrientation: "all",
     transform: "",
-    height: ""
+    height: "",
+    loading: false
   }}
 
   componentDidMount() {
@@ -32,7 +33,21 @@ class App extends Component {
   window.addEventListener('scroll', this.listenScrollEvent);
   window.addEventListener('scroll', this.listenScrollEventNav);
 
-  }
+  };
+  get_data = item => {
+    item = item || this.state.words;
+    this.setState({
+      words: item,
+      loading: true
+    });
+    this.fetchPhotos(item, images => {
+      images = this.state.images.concat(images);
+      this.setState({
+        images,
+        loading: false
+      });
+    });
+  };
  
   fetchPhotos = (inputValue, offset, inputOrientation) => {
     const baseUrl =
@@ -72,6 +87,7 @@ console.log(response.data.files);
         console.log("---------------------");
         console.log("total results is:", this.state.totalPhotos);
       })
+      
       .catch(() => {
         console.log("Error");
       });
@@ -92,7 +108,7 @@ console.log(response.data.files);
     const { pageYOffset } = window;
     if (pageYOffset > 20) {
   
-        this.setState({  transform: "translateY(-140px)",
+        this.setState({  transform: "translateY(-100px)",
            });
     } else if (pageYOffset < 20) {
         this.setState({ transform: "translateY(-60px)", 
@@ -118,7 +134,7 @@ onClickMoreUp = () => {
         <SearchBar 
           onSubmit={this.fetchPhotos} /> */}
               
-    <div style=
+    <div className="topbar" style=
     {{position: "sticky",
     top: "0px",
     zIndex: 2000,
@@ -126,9 +142,10 @@ onClickMoreUp = () => {
     transitionDuration: ".4s",
     AnimationTimingFunction: "ease",
     height: this.state.height,
-    backgroundColor: "white"}}> 
+    backgroundColor: "white",
+ }}> 
       <Welcome     style=
-    {{backgroundColor: "white"}}>
+    {{backgroundColor: "white",}}>
 
         </Welcome> 
         <NavBar onSubmit={this.fetchPhotos} 
@@ -141,6 +158,10 @@ onClickMoreUp = () => {
   
         top: "80vh",
         width: "80px",
+        display: "flex",
+        flexDirection: "column",
+        rowGap: "60px",
+        justifyContent: "center"
      
         }}> 
          <a className="more-up"
@@ -154,7 +175,12 @@ onClickMoreUp = () => {
         </div>
 
 <Basic></Basic>
-        <ListItem images={this.state.images}/>
+        <ListItem 
+        images={this.state.images}
+        loading={this.state.loading}
+        get_data={this.get_data}
+        
+        />
         <Pagination
           prevPageText='prev'
           nextPageText='next'
