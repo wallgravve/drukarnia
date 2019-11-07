@@ -160,7 +160,7 @@ onClickMoreUp = () => {
         width: "80px",
         display: "flex",
         flexDirection: "column",
-        rowGap: "60px",
+      
         justifyContent: "center"
      
         }}> 
@@ -170,7 +170,7 @@ onClickMoreUp = () => {
   
        
         <a className="more-down" 
-        style={{transform: "translateY(-70px)"}}
+        style={{transform: "translateY(-40px)"}}
         onClick={this.onClickMoreDown}><span></span><span></span><span></span></a>
         </div>
 

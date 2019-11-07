@@ -34,7 +34,9 @@
   height: auto;
   border-radius: 8px;
 }
-
+.NavBar-search-5:hover {
+  border-color: black;
+}
 @media (max-width: 768px) {
   .section__box {
     width: 680px;
@@ -345,6 +347,10 @@
   -webkit-transition: 1s;
   transition: 1s;
   opacity: 1;
+}
+.form-group {
+  display: flex !important;
+  flex-direction: column !important;
 }
 
 @-webkit-keyframes imgResize {}

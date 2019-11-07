@@ -42,7 +42,10 @@ background-image: url(http://www.transparenttextures.com/patterns/black-paper.pn
   flex: 1 1 500px;
 }
 
-
+.form-group {
+  display: flex !important;
+  flex-direction: column !important;
+}
 
 /* ============================
           PAGINATION
@@ -281,88 +284,27 @@ top: 0px;
 
 .ReactModal__Content--after-open {
   margin: auto !important;
-  top: 31vh !important;
+  top: 28vh !important;
   max-width: 80vw;
   max-height: 69vh;
 
+
 }
 
-
-.grid-container {
+.crop {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 0.5fr;
-  grid-template-areas: "img img contact-form contact-form" "img img contact-form contact-form" "image-form image-form . .";
-}
 
-.img { grid-area: img; }
 
-.contact-form { grid-area: contact-form; }
+  grid-template-columns: 1fr 1fr;
 
-.image-form { grid-area: image-form; }
-.form_input {
-  border: 1px solid #abb0b2;
-  border-radius: 3px;
-color: #404040;
-display: block;
-font-size: 16px;
-line-height: 1.5;
-margin: 0;
-padding: 8px 0;
-text-indent: 2%;
-width: 100%;
-}
 
-.form_content {
-  color: #656b6f;
-  font-size: 14px;
-  margin-bottom: 30px;
-  padding-bottom: 2em;
-  padding-top: 2em;
-}
-
-.form_content p
-{color: #656b6f;
-  display: block;
-font-size: 14px;
-line-height: 1.5em;
-margin: 1em 0 1.5em;
-text-align: center;}
-.button_submit {
-
-  background-color: #fff;
-  border: 1px solid #cbcbcb;
-  border-radius: 4px;
- 
-  color: #000;
-  cursor: pointer;
-  display: inline-block;
-  font-size: 15px;
-  font-weight: 400;
-  height: 32px;
-  letter-spacing: .1em;
-  line-height: 32px;
-  margin: 0 5px 10px 0;
-  outline: none;
-  padding: 0 22px;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
- 
-  /* vertical-align: top; */
-
-  width: 250px;
-}
-.button_submit:hover, 
-.button_submit:focus,
-.button_submit:active {
-  animation: submit .23s ease-in-out;
 }
 
 
 
 
-.form_label {
+
+/* .form_label {
   color: #656b6f;
   display: block;
   font-weight: 100;
@@ -382,7 +324,7 @@ text-align: center;}
   flex-direction: row;
   justify-content: space-evenly;
   align-content: stretch;  
-}
+} */
 
 .list {
   margin-left: 5vw;
@@ -398,9 +340,6 @@ text-align: center;}
   box-shadow: none !important;
 }
 
-.ui .form {
-  background: red;
-}
 
 
 /*SLIDER */

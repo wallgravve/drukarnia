@@ -1,5 +1,5 @@
 import React,  { Component } from "react";
-import ModalForm from "./ModalForm";
+import Crop from "./Crop";
 // import Card from "@material-ui/core/Card";
 import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
 import Modal from "react-modal";
@@ -126,11 +126,11 @@ class ImageCard extends React.Component {
             </Switch>
         <Modal isOpen={this.state.modalIsOpen} onRequestClose={this.closeModal}>
           <button onClick={this.closeModal}>close</button>
-          <ModalForm
+          <Crop
             src={thumbnail_url}
             widthOrigin={width}
             heightOrigin={height}
-          ></ModalForm>
+          ></Crop>
         </Modal>
       </div>
       </BrowserRouter>

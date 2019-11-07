@@ -38,9 +38,15 @@ function ModalForm () {
 
   return (
     
-    <div className="container">
+    <div className="container"
+    style={{maxWidth: "700px"}}
+    >
 
-      <div className="col-sm-12">
+      <div className="ModalForm"
+          style={{maxWidth: "700px",
+          display: "flex",
+          flexDirection: "column",}}
+      >
         <form onSubmit={handleSubmit(onSubmit)}>
 
           <div className="form-group">

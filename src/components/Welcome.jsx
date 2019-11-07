@@ -9,16 +9,22 @@ constructor(props) {
     this.listenScrollEvent = this.listenScrollEvent.bind(this);    
     this.state = {
         transform: "scale(0.65)",
-       
+     
+    
     }
 }
     listenScrollEvent = e => {
         const { pageYOffset } = window;
         if (pageYOffset > 20) {
-            this.setState({ transform: "scale(0.44)",
+            this.setState({ 
+            transform: "scale(0.24)",
+         
+       
                });
         } else if (pageYOffset < 20) {
-            this.setState({transform: "scale(0.65)", 
+            this.setState({
+                transform: "scale(0.65)", 
+     
                 });
         }
     };
@@ -41,7 +47,9 @@ render() {
             top: "0px",
             justifyContent: "center",
             padding: "30px 0",
-            transform: this.state.transform,
+         
+         
+          
             // overflow: "auto",
             resize: "both",
             transitionDuration: ".2s",
@@ -49,7 +57,7 @@ render() {
             }}>
             <img src={welcome} alt="" 
             style={{ 
-                // transform: this.state.transform
+            transform: this.state.transform,
          
             }}
          
