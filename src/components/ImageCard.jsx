@@ -1,5 +1,7 @@
 import React,  { Component } from "react";
 import Crop from "./Crop";
+
+import closeIcon from "../assets/images/close-24px.svg";
 // import Card from "@material-ui/core/Card";
 import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
 import Modal from "react-modal";
@@ -20,14 +22,16 @@ class ImageCard extends React.Component {
     this.imageRef = React.createRef();
   }
 
-  openModal() {
+  openModal(e) {
+    e.stopPropagation(); 
     this.setState({ modalIsOpen: true });
   }
   closeModal = () => {
     this.setState({ modalIsOpen: false });
   };
 
-  handleMouseHover() {
+  handleMouseHover(e) {
+    e.stopPropagation(); 
     this.setState(this.toggleHoverState);
   }
 
@@ -124,14 +128,23 @@ class ImageCard extends React.Component {
             <Switch>
             <Route path={`${url}/form`} component={Modal} />
             </Switch>
-        <Modal isOpen={this.state.modalIsOpen} onRequestClose={this.closeModal}>
-          <button onClick={this.closeModal}>close</button>
+            {this.state.modalIsOpen ?
+                    (
+        <Modal 
+        isOpen={true}
+        onRequestClose={this.closeModal}>
+          <closeIcon 
+          onClick={this.closeModal}
+          
+          ></closeIcon>
           <Crop
             src={thumbnail_url}
             widthOrigin={width}
             heightOrigin={height}
           ></Crop>
-        </Modal>
+        </Modal>)
+                    : null
+                }
       </div>
       </BrowserRouter>
     );

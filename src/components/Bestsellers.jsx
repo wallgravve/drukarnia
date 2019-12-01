@@ -3,7 +3,7 @@ import ClassNames from "classnames";
 import Slider from "react-slick";
 import Responsive from "react-responsive";
 
-import "./style.scss";
+import "../styles/style.scss";
 import { data } from "../Constants/data";
 
 const DesktopTablet = props => <Responsive {...props} minWidth={768} />;

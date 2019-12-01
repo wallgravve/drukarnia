@@ -4,7 +4,7 @@ import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import "cropperjs/dist/cropper.css";
 import ModalForm from "./ModalForm";
-import { fade, withStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 // import {
 //   base64StringtoFile,
 //   downloadBase64File,

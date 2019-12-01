@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import ImageCard from "./ImageCard";
 import StackGrid from "react-stack-grid";
 import ResizeDetector from "react-resize-detector";
 import styled from "styled-components";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+
 // import Loader from "./server/loader/Loader";
 // import ImageLoader from "./ImageLoader";
-
 
 // class OldListItem extends React.Component {
 //   state = { images };
@@ -20,35 +21,53 @@ import styled from "styled-components";
 // }
 // render () {
 //   return (
-//     <StackGrid className="list" 
+//     <StackGrid className="list"
 //   columnWidth={420}
 //   monitorImagesLoaded={true}
-//   // gutterHeight={200} 
+//   // gutterHeight={200}
 //   >
 //   {this.render_images()}
 //  {/* {this.props.loading && <Loader />} */}
-//  </StackGrid>  
+//  </StackGrid>
 //   );
 // }
 // }
+const useStyles = makeStyles(theme => ({
+  root: {}
+}));
+const ListImages = props => {
+  const classes = useStyles();
+  const [transform, setTransform] = useState("translateY(160px)");
 
-const ListItem = props => {
+  const listenScrollEvent = () => {
+    const { pageYOffset } = window;
+    const pageIsOffset = pageYOffset > 20;
+    if (pageIsOffset) {
+      setTransform("translateY(60px)");
+      // setBoxShadow("0 0 0 0 rgba(0,0,0,0.7)")
+    } else if (!pageIsOffset) {
+      setTransform("translateY(160px)");
+      // setBoxShadow(" 0 0 0 45px rgba(0,0,0,0)")
+    }
+  };
 
-  
-  const images = props.images.map((image) => {
-    return <ImageCard
-            key={image.id}
-            image={image}
-          />
+  const images = props.images.map(image => {
+    return <ImageCard key={image.id} image={image} />;
   });
-  return    <StackGrid 
-  className="list" 
-  columnWidth={400}
-  gutterHeight={40}
 
-  >
- {images} 
- </StackGrid>;
+  return (
+    <StackGrid
+      className={classes.root}
+      style={{
+        transform: transform
+      }}
+      className="list"
+      columnWidth={400}
+      gutterHeight={40}
+    >
+      {images}
+    </StackGrid>
+  );
 };
 // const ListItem = ({ photo }) => {
 //   return (
@@ -72,8 +91,8 @@ const ListItem = props => {
 //           </a>
 //         </div>
 //       </div> */}
-//     </div>
+//     </div
 //   );
 // };
 
-export default ListItem;
+export default ListImages;

@@ -31,7 +31,7 @@ function ModalForm () {
   const onSubmit = async data => 
  { 
    console.log(data);
-    const form = await axios.post('/api/form',{
+    const form = await axios.post('/api',{
       data
     })
   }
@@ -125,9 +125,10 @@ function ModalForm () {
               id="customCheck1"
               ref={register}
             />
-            <label htmlFor="customCheck1"> Proszę o kontakt</label>
           </div>
-          <div className="form-group">
+         
+          <div className="form-group checkform">
+          <label htmlFor="customCheck1"> Proszę o kontakt</label>
             <input className="btn btn-primary" type="submit" />
           </div>
         </form>

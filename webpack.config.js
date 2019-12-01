@@ -1,4 +1,7 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
+
+
+
 module.exports = {
   module: {
     rules: [
@@ -17,10 +20,10 @@ module.exports = {
           }
         ]
       },
-      // {
-      //   test: /\.svg$/,
-      //   use: ['@svgr/webpack'],
-      // }
+      {
+        test: /\.svg$/,
+        use: ['@svgr/webpack'],
+      }
     ]
   },
   resolve: {
